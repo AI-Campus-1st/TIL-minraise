@@ -1,0 +1,45 @@
+문1. 아래의 코드를 실행 하였을 때, 변수 a와 b에 담긴 list의 요소가 같은지 혹은 다른지 여부를 판단하고 그 이유를 작성하시오. 
+
+a = [1, 2, 3, 4, 5] 
+b = a 
+
+a[2] = 5
+
+print(a) 
+print(b)
+
+변수 a와 b에 담긴 list의 요소는 같습니다. 
+위의 코드를 실행하면 다음과 같은 결과가 출력됩니다.
+[1, 2, 5, 4, 5]
+[1, 2, 5, 4, 5] 
+b = a로 인해, a와 b는 하나의 리스트를 참조하게 되어,
+a[2] = 5로 a에 담긴 list의 요소를 변경해도, b 또한 같은 list의 요소를 갖게 됩니다. 
+
+문2. key 값으로 과목명, value 값으로 점수를 가지는 scores의 전체 과목의 평균 점수를 계산하시오.
+
+scores = {
+    'python': 80,
+    'algorithm': 90,
+    'django': 89,
+    'web': 83,
+} # => 85.5
+
+answer = 0
+for key in scores:
+    value = scores[key]
+    answer += value
+answer/len(scores)
+
+문3. 여러 사람의 혈액형(A, B, AB, O)에 대한 정보가 담긴 bloods를 전달 받아, key는 혈액형, value는 사람 수인 dictionary를 만드시오.
+
+bloods = [
+    'A', 'B', 'A', 'O', 'AB', 'AB',
+    'O', 'A', 'B', 'O', 'B', 'AB',
+] # => {'A': 3, 'B': 3, 'O':  3, 'AB': 3}
+
+counter = {}
+for key in bloods:
+    cnt = bloods.count(key)
+    counter[key] = cnt
+counter
+
