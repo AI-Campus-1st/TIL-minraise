@@ -1,4 +1,5 @@
-# 도전! 최대 & 최소 찾기(min & max 쓰지 않고!)
+## 도전! 최대 & 최소 찾기(min & max 쓰지 않고!)
+```py
 my_list = [3, 2, 10, 2, 4]
 
 max_num = my_list[0]
@@ -12,3 +13,4 @@ for num in my_list:
 
 print('최대:', max_num)
 print('최소:', min_num)
+```
