@@ -1,0 +1,112 @@
+-- ## 260807
+-- #### 문항1. 쇼핑몰 서비스 database 및 화원, 상품 테이블 생성과 구조 변경
+
+-- shopping_db 데이터베이스를 생성한 후, 회원 정보를 담을 users 테이블과 상품 정보를 담을 products 테이블을 생성하세요.
+-- 또한 요구사항에 맞춰 컬럼을 추가해 보세요.
+
+-- [요구사항]
+
+-- 1. shopping_db 데이터베이스를 생성하고 활성화(USE)하세요.
+
+-- 2. users 테이블 생성:
+--     * user_id: 정수형(INT), 기본키(PRIMARY KEY), 자동 증가(AUTO_INCREMENT)
+--     * username: 문자열(50자), 필수 입력(NOT NULL)
+--     * email: 문자열(100자), 필수 입력(NOT NULL), 중복 불가(UNIQUE)
+--     * created_at: 날짜시간형(DATETIME), 기본값 현재시간(DEFAULT CURRENT_TIMESTAMP)
+
+-- 3. products 테이블 생성:
+--     * product_id: 정수형(INT), 기본키(PRIMARY KEY), 자동 증가(AUTO_INCREMENT)
+--     * product_name: 문자열(100자), 필수 입력(NOT NULL)
+--     * price: 정수형(INT), 필수 입력(NOT NULL), 기본값 0
+--     * stock_quantity: 정수형(INT), 필수 입력(NOT NULL), 기본값 0
+
+-- 4. users 테이블에 회원 전화번호를 저장할 phone (문자열 20자, NULL 허용) 컬럼을 추가(ALTER TABLE)하세요.
+
+CREATE DATABASE shopping_db
+    CHARACTER SET utf8mb4
+    COLLATE utf8mb4_unicode_ci;
+
+USE shopping_db;
+
+CREATE TABLE users (
+    user_id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE products (
+    product_id INT PRIMARY KEY AUTO_INCREMENT,
+    product_name VARCHAR(100) NOT NULL,
+    price INT NOT NULL DEFAULT 0,
+    stock_quantity INT NOT NULL DEFAULT 0
+);
+
+ALTER TABLE users
+ADD COLUMN phone VARCHAR(20) NULL;
+
+-- #### 문항2. 쇼핑몰 초기 테스트 데이터 등록, 수정 및 삭제
+
+-- 1에서 생성한 users 및 products 테이블에 초기 테스트 데이터를 삽입하고, 데이터 수정 및 삭제 작업을 수행하세요.
+
+-- [요구사항]
+
+-- 1. users 테이블에 최소 3명 이상의 회원 데이터를 INSERT 구문으로 삽입하세요.
+
+-- 2. products 테이블에 최소 4개 이상의 상품 데이터를 단일 또는 다중 INSERT문으로 삽입하세요. (예: 무선 마우스/25000원/50개, 기계식 키보드/89000원/30개, 4K 모니터/350000원/10개, USB 허브/15000원/100개)
+
+-- 3. 'chulsoo@test.com' 회원의 전화번호(phone)를 '010-1234-5678'로 수정(UPDATE)하세요.
+
+-- 4. 잘못 등록된 특정 상품(예: USB 허브)을 삭제(DELETE)하세요.
+
+USE shopping_db;
+
+INSERT INTO users (username, email, phone)
+VALUES
+('지우', 'jiwoo@test.com', NULL),
+('민수', 'minsoo@test.com', '010-2222-3333'),
+('철수', 'chulsoo@test.com', '010-4444-5555');
+
+INSERT INTO products (product_name, price, stock_quantity)
+VALUES
+('무선 마우스', 25000, 50),
+('기계식 키보드', 89000, 30),
+('4K 모니터', 350000, 10),
+('USB 허브', 15000, 100);
+
+UPDATE users
+SET phone = '010-1234-5678'
+WHERE email = 'chulsoo@test.com';
+
+SELECT * FROM users;
+
+DELETE FROM products
+WHERE product_name = 'USB 허브';
+
+SELECT * FROM products;
+
+-- #### 문항3. DISTINCT, ORDER BY, LIMIT을 활용한 기초 SELECT 쿼리 작성
+
+-- 등록된 products 및 users 테이블에서 중복 제거, 정렬, 조회 개수 제한을 수행하는 SELECT SQL 문을 작성하세요.
+
+-- [요구사항]
+
+-- 1. products 테이블에서 중복을 제거한 고유한 상품 재고 수량(stock_quantity) 목록을 조회하세요.
+
+-- 2. products 테이블의 모든 상품을 가격(price)이 비싼 순서(내림차순)로 상품 이름과 가격을 조회하세요.
+
+-- 3. users 테이블에서 회원 번호(user_id)가 가장 큰(최근 등록된) 회원부터 순서대로 상위 2명의 회원 정보를 조회하세요.
+
+USE shopping_db;
+
+SELECT DISTINCT stock_quantity
+FROM products;
+
+SELECT product_name, price
+FROM products
+ORDER BY price DESC;
+
+SELECT *
+FROM users
+ORDER BY user_id DESC
+LIMIT 2;
