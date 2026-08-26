@@ -11,7 +11,6 @@ import requests
 from collect_apt import fetch as fetch_apt, parse as parse_apt
 from collect_forsale import fetch as fetch_sale, parse as parse_sale
 
-# ─────────────── 설정 ───────────────
 DELAY = 0.7
 MAX_PAGE = 50 
 
